@@ -1,0 +1,81 @@
+.home-background {
+  position: relative;
+  padding: 20px; /* Espai al voltant del contingut */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra tots els elements horitzontalment */
+  justify-content: flex-start; /* Ajusta l'alineació vertical per començar des de la part superior */
+  height: 100vh; /* Assegura que ocupi tota la pantalla */
+  width: 100vw; /* Assegura que ocupi tota l'amplada de la pantalla */
+  overflow: auto; /* Permet desplaçar-se si el contingut és més gran que la pantalla */
+  background-color: #ff8c00; /* Color de fons si la imatge no es carrega */
+}
+
+.gradient-text {
+  font-size: 4.5rem; /* Augmenta la mida de la font aquí */
+  font-weight: bold; /* Fa que el text sigui més gros */
+  color: #d7cbcb; /* Color del text similar al que es veu a la imatge */
+  text-shadow: 
+    2px 3px 0 rgba(0, 0, 0, 0.2), /* Sombrejat per donar volum */
+    2px 2px 0 rgba(0, 0, 0, 0.15), /* Sombrejat més intens */
+    3px 3px 0 rgba(0, 0, 0, 0.1); /* Sombrejat de fons */
+  margin: 20px 0; /* Espai entre el text i les figures corrent */
+  z-index: 2; /* Assegura que el text estigui per sobre de les altres imatges */
+  text-align: center; /* Centra el text */
+}
+
+.runners-image {
+  position: absolute; /* Permet posicionar la imatge sobre el text */
+  top: 20%; /* Ajusta la posició vertical de la imatge */
+  left: 50%; /* Centra la imatge horitzontalment */
+  transform: translate(-50%, -50%); /* Centra la imatge en relació al seu propi tamany */
+  width: 35%; /* Ajusta la mida de la imatge (modifica segons les necessitats) */
+  max-width: 400px; /* Mida màxima per assegurar que no sigui massa gran */
+  height: auto; /* Manté la proporció de l'imatge */
+  z-index: 1; /* Assegura que la imatge estigui per sota del text */
+}
+
+/* Rutes */
+.routes-container {
+  display: flex; /* Utilitza flexbox per distribuir les imatges */
+  justify-content: center; /* Centra les imatges horitzontalment */
+  flex-wrap: wrap; /* Permet que les imatges es moguin a la següent línia si no hi ha espai */
+  margin-top: 30px; /* Espai superior per separar les imatges del text */
+}
+
+.route-image {
+  width: 30%; /* Ajusta la mida de les imatges del recorregut */
+  max-width: 250px; /* Mida màxima per evitar que siguin massa grans */
+  margin: 10px; /* Espai lateral entre les imatges */
+  height: auto; /* Manté la proporció de les imatges */
+}
+
+/* Media queries per ajustar la mida de la lletra i la imatge en pantalles petites */
+@media (max-width: 768px) {
+  .gradient-text {
+    font-size: 3rem; /* Mida de la font més petita per a pantalles petites */
+  }
+
+  .runners-image {
+    width: 50%; /* Mida de la imatge més gran a pantalles petites */
+  }
+
+  .route-image {
+    width: 45%; /* Mida de les imatges del recorregut a pantalles mitjanes */
+  }
+}
+
+@media (max-width: 480px) {
+  .gradient-text {
+    font-size: 2.5rem; /* Mida de la font encara més petita */
+  }
+
+  .runners-image {
+    width: 70%; /* Mida de la imatge més gran a pantalles molt petites */
+  }
+
+  .route-image {
+    width: 90%; /* Mida de les imatges del recorregut a pantalles petites */
+    max-width: none; /* Elimina la mida màxima per permetre que s'adapti */
+  }
+}
