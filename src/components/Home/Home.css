@@ -12,9 +12,14 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para la pantalla de apertura */
-  color: white;
+  color: rgb(228, 71, 19);
+  text-shadow: 
+    6px 3px 0 rgba(0, 0, 0, 0.2), /* Sombrejat per donar volum */
+    2px 2px 0 rgba(0, 0, 0, 0.15), /* Sombrejat més intens */
+    6px 3px 0 rgba(0, 0, 0, 0.1); /* Sombrejat de fons */
+  margin: 0; /* Elimina el marge per defecte */
   z-index: 2; /* Asegura que la pantalla de apertura esté por encima del contenido */
-  transition: opacity 1s; /* Transición suave */
+  transition: opacity 2s; /* Transición suave */
 }
 
 .splash-text {
@@ -33,6 +38,13 @@
   margin: 0; /* Elimina el marge per defecte */
   filter: brightness(1.1); /* Opcional: augmenta la brillantor general del text */
 }
+
+.route-image {
+  width: 20%; /* Adjust size as needed */
+  max-width: 300px; /* Ensure max width */
+  height: auto; /* Maintain aspect ratio */
+}
+
 
 .runners-image {
   position: absolute; /* Permet posicionar la imatge sobre el text */

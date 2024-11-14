@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import FonsDegradat from './FonsDegradat.png'; // Importa la imatge de fons
 import RunnersImage from './PeopleRunning.png'; // Importa la imatge de les figures corrent
+import RouteImage from './Route.png'; // Importa la imatge de les figures corrent
 
 function Home() {
   const [showSplash, setShowSplash] = useState(true);
@@ -9,9 +10,9 @@ function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 1000); // 15 segons
-
-    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
+    }, 1000); // 1 segon
+  
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -29,7 +30,12 @@ function Home() {
     >
       {showSplash ? (
         <div className="splash-screen">
-          <h1 className="splash-text">Bienvenido a ROUTECRAFT</h1>
+          <h1 className="splash-text">BENVINGUT A ROUTECRAFT</h1>
+          <img 
+            src={RouteImage} 
+            alt="Route" 
+            className="route-image" 
+          />
         </div>
       ) : (
         <div className="form-container" style={{ textAlign: "center", color: "white" }}>
