@@ -1,0 +1,66 @@
+/* Contenedor principal */
+.carousel-container {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #8e44ad, #e74c3c, #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+/* Slide */
+.carousel-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image {
+  width: 300px; /* Ajusta según sea necesario */
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.carousel-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Botones */
+.carousel-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-button {
+  background: linear-gradient(to right, #ffcc80, #ff8a65);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-button:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
