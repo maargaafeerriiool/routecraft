@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import FonsDegradat from './FonsDegradat.png'; // Importa la imatge de fons
-import RunnersImage from './PeopleRunning.png'; // Importa la imatge de les figures corrent
-import RouteImage from './Route.png'; // Importa la imatge de les figures corrent
+import FonsDegradat from './FonsDegradat.png';
+import RunnersImage from './PeopleRunning.png';
+import RouteImage from './Route.png';
 
 function Home() {
   const [showSplash, setShowSplash] = useState(true);
+  const navigate = useNavigate(); // Use navigate for redirection
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 1000); // 1 segon
+      navigate('/login'); // Automatically redirect to Login after splash screen
+    }, 1000); // Adjust the time as needed
   
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="home-background"

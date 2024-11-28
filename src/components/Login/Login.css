@@ -44,7 +44,7 @@
     border-radius: 5px;
     cursor: pointer;
     width: 80%;
-    max-width: 300px;
+    max-width: 200px;
     text-align: center;
     font-size: 16px;
     background-color: #ffcd8f; /* Example color for buttons */
@@ -54,7 +54,7 @@
   
   .login-button:hover,
   .signup-button:hover {
-    background-color: #ff914d; /* Adjust as needed */
+    background-color: #cf5e18; /* Adjust as needed */
   }
   
   .signup-button {
