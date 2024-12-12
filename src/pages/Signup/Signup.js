@@ -7,8 +7,8 @@ const Signup = ({ setUser }) => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    setUser(true);
-    navigate("/payment");
+    setUser(true); // Marca al usuario como autenticado
+    navigate("/welcome"); // Redirige a la página de bienvenida
   };
 
   return (

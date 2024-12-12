@@ -8,17 +8,17 @@ const Signin = ({ setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUser(true);
-    navigate("/payment");
+    setUser(true); // Marca al usuario como autenticado
+    navigate("/welcome"); // Redirige a la página de bienvenida
   };
 
   return (
-    <div className="login-container">
+    <div className="signin-container">
       <h1 className="logo">ROUTECRAFT</h1>
       <div className="profile-picture">
         <p>150 x 150</p>
       </div>
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="signin-form">
         <label htmlFor="email">EMAIL</label>
         <input
           type="email"
@@ -37,7 +37,7 @@ const Signin = ({ setUser }) => {
             setFormData({ ...formData, password: e.target.value })
           }
         />
-        <button type="submit" className="login-button">SIGN IN</button>
+        <button type="submit" className="signin-button">SIGN IN</button>
       </form>
       <div className="map-image">
         <p>500 x 800</p>
