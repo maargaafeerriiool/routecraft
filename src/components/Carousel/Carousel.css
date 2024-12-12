@@ -2,7 +2,7 @@
 .carousel-container {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+  background: linear-gradient(to bottom, #ffffff);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -15,11 +15,12 @@
   font-family: "Montserrat", sans-serif;
   font-size: 36px;
   font-weight: bold;
-  background: linear-gradient(90deg, #8e44ad, #e74c3c, #f39c12);
+  background: linear-gradient(90deg, #ff7e5f, #ffa07a, #f39c12);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
 }
+
 
 /* Slide */
 .carousel-slide {
@@ -33,14 +34,23 @@
   width: 300px; /* Ajusta según sea necesario */
   height: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .carousel-text {
   font-size: 18px;
-  font-weight: 500;
-  color: #333;
+  font-weight: bold;
+  font-style: italic;
+  color: #ef8c0a;
   margin-bottom: 30px;
+
+   /* Estilo del contenedor */
+   padding: 10px 20px; /* Espaciado interno */
+   border: 2px solid #efb20a; /* Borde del contenedor */
+   border-radius: 10px; /* Bordes redondeados */
+   background-color: #fff8f0; /* Fondo claro */
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
+   display: inline-block; /* Ajustar al contenido del texto */
 }
 
 /* Botones */
@@ -50,7 +60,7 @@
 }
 
 .auth-button {
-  background: linear-gradient(to right, #ffcc80, #ff8a65);
+  background: linear-gradient(to right, #ff8645, #e7ad0e);
   color: white;
   border: none;
   border-radius: 20px;

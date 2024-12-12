@@ -1,164 +1,43 @@
-/* Estilos generales */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f7f7f7;
-}
-
-/* Contenedor principal */
 .signup-container {
-  width: 90%; /* Utilitza un percentatge per adaptar-se a diferents amplades de pantalla */
-  max-width: 400px; /* Limita l'ample màxim en pantalles grans */
+  width: 90%;
+  max-width: 400px;
   margin: 20px auto;
-  padding: 40px 20px; /* Espai intern */
+  padding: 40px 30px;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
-  min-height: 600px; /* Alçada mínima per mantenir la forma */
 }
 
-/* Ajustos per a pantalles mitjanes */
-@media (max-width: 768px) {
-  .signup-container {
-    padding: 30px 15px; /* Redueix el padding en pantalles petites */
-    min-height: 500px; /* Ajust de l'alçada mínima */
-  }
-}
-
-/* Ajustos per a pantalles molt petites */
-@media (max-width: 480px) {
-  .signup-container {
-    padding: 20px 10px; /* Encara més compacte */
-    min-height: 450px; /* Més petit per a mòbils */
-  }
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@800&display=swap');
-
-/* Estilo del logo */
 .logo {
-  font-family: 'Montserrat', sans-serif; /* Puedes cambiar a 'Bebas Neue' o probar combinaciones */
-  font-size: 46px; /* Tamaño del texto */
-  font-weight: 800; /* Negrita extra */
-  background: linear-gradient(90deg, #8e44ad, #e74c3c, #f39c12); /* Gradiente lineal */
-  -webkit-background-clip: text; /* Gradiente solo en el texto */
-  -webkit-text-fill-color: transparent; /* Hace que el fondo sea transparente */
-  text-align: center; /* Centrado */
-}
-
-
-
-
-.logo-placeholder {
-  font-size: 12px;
-  background: #d3d3d3;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-/* Sección de foto de perfil */
-.profile-picture-section {
-  position: relative;
-  margin: 20px auto;
-}
-
-.profile-picture {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px; /* Augmenta el diàmetre */
-  height: 100px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff8a65, #ffb74d);
-  margin: 0 auto;
-  font-size: 50px; /* Ajusta la mida de l'emoji */
-}
-
-
-.edit-button {
-  position: absolute;
-  top: 50%;
-  right: 40%;
-  transform: translate(50%, -50%);
-  background: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 14px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.signup-btn {
-  background: #d4af37; /* Oro */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Formulario */
-.signup-form {
-  margin: 20px 0;
-}
-
-.form-row {
-  display: flex;
-  gap: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #8e44ad, #e74c3c, #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
 }
 
 .input-field {
-  padding: 10px;
+  padding: 12px 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 14px;
   width: 100%;
+  margin-bottom: 20px;
 }
 
-.input-field.full-width {
-  width: calc(100% - 20px);
-  margin: 10px 0;
-}
-
-.create-account-btn {
+.signup-btn {
   background: linear-gradient(90deg, #ff8a65, #ffb74d);
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
-/* Opciones de plan */
-.plan-options {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.plan-btn {
-  width: 45%;
-  padding: 10px 15px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.regular-plan {
-  background: #ffe0b2;
-}
-
-.premium-plan {
-  background: #ffcc80;
+.signup-btn:hover {
+  background: linear-gradient(90deg, #ffb74d, #ff8a65);
 }

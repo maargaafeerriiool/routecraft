@@ -1,14 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Hook para redirección
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = ({ setUser }) => {
-  const navigate = useNavigate(); // Hook para redirección
+  const navigate = useNavigate();
 
   const handleSignUp = (e) => {
-    e.preventDefault(); // Evita el comportamiento predeterminado del formulario
-    setUser(true); // Actualiza el estado del usuario
-    navigate("/payment"); // Redirige a la página de pago
+    e.preventDefault();
+    setUser(true);
+    navigate("/payment");
   };
 
   return (

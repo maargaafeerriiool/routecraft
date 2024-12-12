@@ -37,3 +37,9 @@ button {
   padding: 10px 20px;
   cursor: pointer;
 }
+
+.App {
+  padding-bottom: 70px; /* Altura suficiente para el footer */
+  box-sizing: border-box;
+}
+

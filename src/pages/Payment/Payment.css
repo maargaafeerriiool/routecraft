@@ -32,13 +32,13 @@ body {
   /* Foto de perfil */
   .profile-picture-section {
     position: relative;
-    margin: 20px auto;
+    margin: 40px auto;
   }
   
   .profile-picture {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 20%;
     background: linear-gradient(135deg, #ff8a65, #ffb74d);
     display: flex;
     justify-content: center;
