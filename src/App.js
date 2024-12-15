@@ -7,6 +7,7 @@ import Carousel from "./components/Carousel/Carousel";
 import Signin from "./pages/Signin/Signin";
 import Footer from "./components/Footer/Footer";
 
+
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/signin" />;
 };
