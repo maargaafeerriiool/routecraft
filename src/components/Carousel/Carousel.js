@@ -44,7 +44,7 @@ const Carousel = () => {
       </div>
       <div className="carousel-buttons">
         {/* Redirige a la página de inicio de sesión */}
-        <button className="auth-button" onClick={() => navigate("/login")}>
+        <button className="auth-button" onClick={() => navigate("/signin")}>
           SIGN IN
         </button>
         {/* Redirige a la página de registro */}
