@@ -1,43 +1,47 @@
+/* Ya existente */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f3f4f6; /* Llum de fons */
+  background-color: #f3f4f6; /* Fondo claro */
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
+/* Contenedor principal */
 .signin-container {
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  padding: 30px 40px;
+  padding: 40px 40px;
   text-align: center;
   max-width: 450px;
-  margin: 20px auto;
+  margin: 10px auto; /* Margen arriba y abajo */
+  display: flex; /* Flexbox para centrar */
+  flex-direction: column; /* Coloca los elementos en columna */
+  align-items: center; /* Centra horizontalmente */
+  gap: 20px; /* Espacio uniforme entre elementos */
 }
 
-.logo {
-  font-size: 36px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #aa00ff, #ff7e5f, #ff6b6b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-}
-
+/* Imagen del perfil */
 .profile-picture {
   width: 150px;
   height: 150px;
-  margin: 0 auto 25px;
+  margin: 0 auto; /* Centra automáticamente */
   border-radius: 50%;
-  background-image: url('https://via.placeholder.com/150');
+  background-image: url('https://via.placeholder.com/150'); /* Imagen temporal */
   background-size: cover;
   background-position: center;
   border: 5px solid #ffa07a;
 }
 
+/* Formulario */
+.signin-form {
+  width: 100%; /* Asegura que el formulario ocupe todo el ancho del contenedor */
+}
+
+/* Etiquetas */
 label {
   font-weight: bold;
   font-size: 14px;
@@ -47,6 +51,7 @@ label {
   margin-bottom: 8px;
 }
 
+/* Entradas de texto */
 input {
   width: 100%;
   padding: 12px;
@@ -61,6 +66,7 @@ input::placeholder {
   color: #999;
 }
 
+/* Botón */
 .signin-button {
   width: 100%;
   padding: 12px;
@@ -69,7 +75,7 @@ input::placeholder {
   color: #333;
   background: linear-gradient(to right, #f89c42, #f6c142);
   border: none;
-  border-radius: 25px;
+  border-radius: 15px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
@@ -78,9 +84,10 @@ input::placeholder {
   background: linear-gradient(to right, #f6c142, #f89c42);
 }
 
+/* Imagen del mapa/GIF */
 .map-image {
   margin-top: 25px;
-  width: 100%;
+  width: 100%; /* Ocupa el ancho del contenedor */
   height: 200px;
   background: url('https://via.placeholder.com/500x200') no-repeat center center;
   background-size: cover;

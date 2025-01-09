@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
+import PeopleRunning from './PeopleRunning.png';
 
 const Signup = ({ setUser }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Signup = ({ setUser }) => {
     <div className="signup-container">
       <h1 className="logo">ROUTECRAFT</h1>
       <div className="profile-picture">
-        <p>150 x 150</p>
+      <img src={PeopleRunning} alt="Profile" style={{ backgroundColor: "white", borderRadius: "50%", padding: "5px", width: "150px", height: "150px", objectFit: "contain" }} />
       </div>
       <form onSubmit={handleSignUp} className="signup-form">
         <label htmlFor="name">NAME</label>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Signin.css';
+import PeopleRunning from './PeopleRunning.png';
+import ubicacio from'./ubicacio.gif';
 
 const Signin = ({ setUser }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -16,7 +18,7 @@ const Signin = ({ setUser }) => {
     <div className="signin-container">
       <h1 className="logo">ROUTECRAFT</h1>
       <div className="profile-picture">
-        <p>150 x 150</p>
+        <img src={PeopleRunning} alt="Profile" style={{ backgroundColor: "white", borderRadius: "50%", padding: "5px", width: "150px", height: "150px", objectFit: "contain" }} />     
       </div>
       <form onSubmit={handleSubmit} className="signin-form">
         <label htmlFor="email">EMAIL</label>
@@ -39,8 +41,15 @@ const Signin = ({ setUser }) => {
         />
         <button type="submit" className="signin-button">SIGN IN</button>
       </form>
-      <div className="map-image">
-        <p>500 x 800</p>
+      <div>
+        <img
+          src={ubicacio} 
+          alt="Loading animation"
+          style={{
+            objectFit: "contain",
+            marginTop: "20px" 
+          }}
+        />
       </div>
     </div>
   );
