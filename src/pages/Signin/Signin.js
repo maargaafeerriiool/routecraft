@@ -4,6 +4,12 @@ import './Signin.css';
 import PeopleRunning from './PeopleRunning.png';
 import ubicacio from './ubicacio.gif';
 
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  GOOGLE_API_KEY
+} from "../apiKeys"; // Ajusta el PATH segons la teva estructura
+
 const Signin = ({ setUser }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   
@@ -19,7 +25,7 @@ const Signin = ({ setUser }) => {
 
     // Just després de validar l'usuari, el redirigim a l’URL d’autorització de Strava.
     window.location.href = 
-      "https://www.strava.com/oauth/authorize?client_id=142793&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read";
+      "https://www.strava.com/oauth/authorize?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read";
   };
 
   return (

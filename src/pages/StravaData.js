@@ -3,13 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import polyline from "@mapbox/polyline"; // Decodificador de polylines
 
-// Credencials de la teva app
-const CLIENT_ID = "142793";
-const CLIENT_SECRET = "0e6ae7d8e89de04a613228c9e2315019c38c1aad";
-
-// La teva Google Maps API key (Street View)
-const GOOGLE_API_KEY = "AIzaSyAPMJ2MkgSTRK8USKRv3FT6gsKzMbOj_zk";
-
+import {
+    CLIENT_ID,
+    CLIENT_SECRET,
+    GOOGLE_API_KEY
+  } from "./apiKeys"; // Ajusta el PATH segons la teva estructura
+  
 const StravaData = () => {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
