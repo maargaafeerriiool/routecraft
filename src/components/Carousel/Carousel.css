@@ -1,5 +1,6 @@
 
 /* Contenedor principal */
+
 .carousel-container {
   background: #fff;
   border-radius: 15px;
@@ -57,21 +58,24 @@
 .carousel-buttons {
   display: flex;
   gap: 15px;
+  justify-content: center; /* Asegura que los botones estén centrados horizontalmente */
+  align-items: center; /* Opcional: centra verticalmente si es necesario */
 }
 
 .auth-button {
-  background: linear-gradient(to right, #ff8645, #e7ad0e);
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
   color: white;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 30px;
   font-size: 18px;
   font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+  
 .auth-button:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);

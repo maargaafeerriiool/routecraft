@@ -68,20 +68,21 @@ input::placeholder {
 
 /* Botón */
 .signin-button {
-  width: 100%;
-  padding: 12px;
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
+  color: white;
   font-size: 18px;
   font-weight: bold;
-  color: #333;
-  background: linear-gradient(to right, #f89c42, #f6c142);
+  padding: 10px 30px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+  
 .signin-button:hover {
-  background: linear-gradient(to right, #f6c142, #f89c42);
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Imagen del mapa/GIF */

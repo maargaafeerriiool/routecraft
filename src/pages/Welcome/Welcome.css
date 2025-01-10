@@ -1,12 +1,16 @@
 /* Contenedor principal */
 .welcome-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    padding: 20px;
-    background: linear-gradient(to bottom, #ffffff);
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 40px 40px;
+  text-align: center;
+  max-width: 450px;
+  margin: 10px auto; /* Margen arriba y abajo */
+  display: flex; /* Flexbox para centrar */
+  flex-direction: column; /* Coloca los elementos en columna */
+  align-items: center; /* Centra horizontalmente */
+  gap: 20px; /* Espacio uniforme entre elementos */
   }
   
   /* Header */
