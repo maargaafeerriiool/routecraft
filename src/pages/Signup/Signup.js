@@ -1,7 +1,12 @@
+// src/components/Signup.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
-import PeopleRunning from './PeopleRunning.png';
+import PeopleRunning from "./PeopleRunning.png";
+
+// 1) Importem de Firebase Auth
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase"; // El fitxer on inicialitzes Firebase
 
 const Signup = ({ setUser }) => {
   const navigate = useNavigate();
@@ -13,22 +18,40 @@ const Signup = ({ setUser }) => {
     confirmPassword: "",
   });
 
+  // Funció auxiliar per actualitzar l’estat segons l’input
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Funció principal: crear usuari a Firebase
   const handleSignUp = async (e) => {
     e.preventDefault();
 
+    // Comprovació bàsica: contrasenyes iguals
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
     try {
-      setUser(true); // Mark user as authenticated
-      navigate("/welcome"); // Redirect to welcome page
+      // 2) Creem usuari amb correu i contrasenya a Firebase
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      
+      // userCredential.user és l'usuari creat
+      console.log("User created:", userCredential.user);
+
+      // (Opcional) Podries guardar 'name' i 'surnames' en un Firestore o en userProfile
+
+      // 3) Indiquem a l’estat local que ja està loguejat
+      setUser(true);
+
+      // 4) Redirigim on vulguis (p.ex. a "/welcome")
+      navigate("/welcome");
     } catch (error) {
       console.error("Error signing up:", error.message);
       alert(error.message);
@@ -39,8 +62,20 @@ const Signup = ({ setUser }) => {
     <div className="signup-container">
       <h1 className="logo">ROUTECRAFT</h1>
       <div className="profile-picture">
-      <img src={PeopleRunning} alt="Profile" style={{ backgroundColor: "white", borderRadius: "50%", padding: "5px", width: "150px", height: "150px", objectFit: "contain" }} />
+        <img
+          src={PeopleRunning}
+          alt="Profile"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "50%",
+            padding: "5px",
+            width: "150px",
+            height: "150px",
+            objectFit: "contain",
+          }}
+        />
       </div>
+
       <form onSubmit={handleSignUp} className="signup-form">
         <label htmlFor="name">NAME</label>
         <input
@@ -52,6 +87,7 @@ const Signup = ({ setUser }) => {
           onChange={handleChange}
           required
         />
+
         <label htmlFor="surnames">SURNAMES</label>
         <input
           type="text"
@@ -62,6 +98,7 @@ const Signup = ({ setUser }) => {
           onChange={handleChange}
           required
         />
+
         <label htmlFor="email">EMAIL</label>
         <input
           type="email"
@@ -72,6 +109,7 @@ const Signup = ({ setUser }) => {
           onChange={handleChange}
           required
         />
+
         <label htmlFor="password">CREATE PASSWORD</label>
         <input
           type="password"
@@ -82,6 +120,7 @@ const Signup = ({ setUser }) => {
           onChange={handleChange}
           required
         />
+
         <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
         <input
           type="password"
@@ -92,6 +131,7 @@ const Signup = ({ setUser }) => {
           onChange={handleChange}
           required
         />
+
         <button type="submit" className="signup-button">SIGN UP</button>
       </form>
     </div>
