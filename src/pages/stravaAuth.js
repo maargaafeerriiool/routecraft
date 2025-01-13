@@ -1,13 +1,11 @@
-// src/utils/stravaAuth.js
-
 import axios from "axios";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "./firebase"; 
+import { db } from "./firebase"; // Assegura't que la ruta sigui correcta
 import { CLIENT_ID, CLIENT_SECRET } from "./apiKeys";
 
 /**
  * Desa en un document de Firestore els tokens obtinguts de Strava.
- * @param {string} userId - L'ID de l'usuari actual (p.ex. user.uid de Firebase)
+ * @param {string} userId - L'ID de l'usuari (p.ex. user.uid de Firebase)
  * @param {string} accessToken
  * @param {string} refreshToken
  * @param {number} expiresAt - temps en format "Unix timestamp" (segons)
@@ -33,14 +31,14 @@ async function getTokensFromFirestore(userId) {
   if (!snapshot.exists()) {
     return null;
   }
-  return snapshot.data(); 
+  return snapshot.data();
 }
 
 /**
- * 1) Intercanvia el 'authorizationCode' per un access_token i refresh_token
- * 2) Desa aquests tokens a Firestore
+ * Intercanvia el 'authorizationCode' per un access_token i refresh_token,
+ * i desa aquests tokens a Firestore.
  * @param {string} authorizationCode - ?code=... retornat per Strava
- * @param {string} userId - ID de l'usuari al teu Firebase
+ * @param {string} userId - ID de l'usuari (auth.currentUser.uid)
  * @returns {Promise<string | null>} Retorna el 'access_token' o null si falla
  */
 export async function exchangeCodeForToken(authorizationCode, userId) {
@@ -76,7 +74,7 @@ export async function exchangeCodeForToken(authorizationCode, userId) {
 export async function getValidStravaToken(userId) {
   const tokens = await getTokensFromFirestore(userId);
   if (!tokens) {
-    return null; 
+    return null;
   }
 
   const { access_token, refresh_token, expires_at } = tokens;
@@ -91,7 +89,7 @@ export async function getValidStravaToken(userId) {
     return access_token;
   }
 
-  // Si és caducat, fem la crida de refresh
+  // Si ja és caducat, fem la crida de refresh
   try {
     const refreshResp = await axios.post("https://www.strava.com/api/v3/oauth/token", {
       client_id: CLIENT_ID,
@@ -103,7 +101,7 @@ export async function getValidStravaToken(userId) {
     const {
       access_token: newAccess,
       refresh_token: newRefresh,
-      expires_at: newExpires
+      expires_at: newExpires,
     } = refreshResp.data;
 
     // Desa els nous valors a Firestore

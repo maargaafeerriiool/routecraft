@@ -1,5 +1,3 @@
-// src/components/Signin.js
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signin.css";
@@ -10,11 +8,11 @@ import ubicacio from "./ubicacio.gif";
 import {
   signInWithEmailAndPassword,
   setPersistence,
-  browserLocalPersistence
+  browserLocalPersistence,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
-// 2) Importa la teva Strava CLIENT_ID
+// 2) Importa el teu client ID de Strava (o canvia la ruta a on el tinguis)
 import { CLIENT_ID } from "../apiKeys"; 
 
 const Signin = ({ setUser }) => {
@@ -43,12 +41,12 @@ const Signin = ({ setUser }) => {
       );
       console.log("User signed in:", userCredential.user);
 
-      // 5) Indiquem a l’estat local que l’usuari està loguejat
-      setUser(true);
+      // 5) Indiquem a l’estat local que l’usuari està loguejat (si ho necessites)
+      if (setUser) setUser(true);
 
-      // 6) Esperem un moment perquè Firebase consolidi l’usuari (a vegades no cal, però és útil)
+      // 6) Esperem un moment perquè Firebase consolidi l’usuari
       setTimeout(() => {
-        // Ara redirigim a l’OAuth de Strava
+        // Redirigim a l’OAuth de Strava
         window.location.href = 
           `https://www.strava.com/oauth/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read`;
       }, 500);

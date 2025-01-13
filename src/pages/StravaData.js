@@ -1,11 +1,10 @@
-// src/StravaData.js
-
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import polyline from "@mapbox/polyline";
 
 import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { exchangeCodeForToken, getValidStravaToken } from "./stravaAuth";
 import { GOOGLE_API_KEY } from "./apiKeys";
 
@@ -18,18 +17,18 @@ const StravaData = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Funció de debug per veure user
-  const debugUser = () => {
-    const user = auth.currentUser;
-    console.log("===== STRAVA DATA DEBUG =====");
-    console.log("auth.currentUser:", user);
-    if (user) {
-      console.log("user.uid:", user.uid);
-      console.log("user.email:", user.email);
-    }
-    console.log("=============================");
-  };
+  // Estat on guardarem l’usuari un cop Firebase Auth el detecti
+  const [currentUser, setCurrentUser] = useState(undefined);
 
+  // Escoltem canvis d’auth: quan hi hagi usuari, l’assignem a currentUser
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user || null);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Helper per cridar l'API de Strava i omplir athlete / activities
   const fetchStravaData = async (token) => {
     try {
       setLoading(true);
@@ -58,22 +57,22 @@ const StravaData = () => {
     }
   };
 
+  // Quan tinguem `authorizationCode` (si Strava ens el dóna) i un usuari, fem la lògica de tokens
   useEffect(() => {
-    debugUser(); // Veiem què diu auth.currentUser abans de fer res
+    // Encara no sabem si hi ha usuari o no
+    if (currentUser === undefined) return;
 
-    const user = auth.currentUser;
-    if (!user) {
-      console.log("No hi ha user -> setError(...)");
+    // Si directament no hi ha usuari loguejat, error
+    if (currentUser === null) {
       setError("Has d'estar identificat a l'app perquè puguem desar el token a Firestore.");
       return;
     }
 
-    // Aquí ja tens user.uid
     (async () => {
       try {
         if (authorizationCode) {
           console.log("Hi ha code -> exchangeCodeForToken...");
-          const newToken = await exchangeCodeForToken(authorizationCode, user.uid);
+          const newToken = await exchangeCodeForToken(authorizationCode, currentUser.uid);
           if (newToken) {
             console.log("Obtingut newToken:", newToken);
             await fetchStravaData(newToken);
@@ -82,7 +81,7 @@ const StravaData = () => {
           }
         } else {
           console.log("No hi ha code -> getValidStravaToken...");
-          const validToken = await getValidStravaToken(user.uid);
+          const validToken = await getValidStravaToken(currentUser.uid);
           if (validToken) {
             console.log("Obtingut validToken:", validToken);
             await fetchStravaData(validToken);
@@ -91,12 +90,13 @@ const StravaData = () => {
           }
         }
       } catch (e) {
-        console.error(e);
+        console.error("Error processant el token de Strava:", e);
         setError("Error processant el token de Strava.");
       }
     })();
-  }, [authorizationCode]);
+  }, [authorizationCode, currentUser]);
 
+  // Helpers per decodificar polilínies i obtenir StreetView
   const decodePolyline = (poly) => {
     try {
       return polyline.decode(poly);
@@ -112,6 +112,7 @@ const StravaData = () => {
   return (
     <div style={{ margin: "1rem" }}>
       <h1>Dades de Strava</h1>
+
       {loading && <p>Carregant dades...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -121,7 +122,9 @@ const StravaData = () => {
           <p>
             {athlete.firstname} {athlete.lastname}
           </p>
-          <p>{athlete.city}, {athlete.country}</p>
+          <p>
+            {athlete.city}, {athlete.country}
+          </p>
         </div>
       )}
 
