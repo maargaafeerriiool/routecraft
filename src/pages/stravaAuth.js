@@ -1,115 +1,104 @@
+// stravaAuth.js
 import axios from "axios";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "./firebase"; // Assegura't que la ruta sigui correcta
-import { CLIENT_ID, CLIENT_SECRET } from "./apiKeys";
+import { db } from "./firebase"; // Ajusta la ruta si hace falta
+
+// Normalmente usarías variables de entorno en vez de ponerlo en duro
+const STRAVA_CLIENT_ID = process.env.REACT_APP_STRAVA_CLIENT_ID;
+const STRAVA_CLIENT_SECRET = process.env.REACT_APP_STRAVA_CLIENT_SECRET;
 
 /**
- * Desa en un document de Firestore els tokens obtinguts de Strava.
- * @param {string} userId - L'ID de l'usuari (p.ex. user.uid de Firebase)
- * @param {string} accessToken
- * @param {string} refreshToken
- * @param {number} expiresAt - temps en format "Unix timestamp" (segons)
+ * Intercambia el "code" (que Strava te manda tras la autorización)
+ * por un "access_token" y "refresh_token".
+ * Luego lo guarda en Firestore dentro del usuario con ID `userId`.
  */
-async function saveTokensToFirestore(userId, accessToken, refreshToken, expiresAt) {
-  const ref = doc(db, "strava_tokens", userId);
-  await setDoc(ref, {
-    access_token: accessToken,
-    refresh_token: refreshToken,
-    expires_at: expiresAt,
-    updatedAt: Date.now(),
-  });
-}
-
-/**
- * Obté de Firestore els tokens d'un usuari donat.
- * @param {string} userId
- * @returns {Promise<{access_token, refresh_token, expires_at} | null>}
- */
-async function getTokensFromFirestore(userId) {
-  const ref = doc(db, "strava_tokens", userId);
-  const snapshot = await getDoc(ref);
-  if (!snapshot.exists()) {
-    return null;
-  }
-  return snapshot.data();
-}
-
-/**
- * Intercanvia el 'authorizationCode' per un access_token i refresh_token,
- * i desa aquests tokens a Firestore.
- * @param {string} authorizationCode - ?code=... retornat per Strava
- * @param {string} userId - ID de l'usuari (auth.currentUser.uid)
- * @returns {Promise<string | null>} Retorna el 'access_token' o null si falla
- */
-export async function exchangeCodeForToken(authorizationCode, userId) {
+export async function exchangeCodeForToken(code, userId) {
   try {
-    const response = await axios.post("https://www.strava.com/api/v3/oauth/token", {
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      code: authorizationCode,
+    // Petición POST a Strava
+    const response = await axios.post("https://www.strava.com/oauth/token", {
+      client_id: STRAVA_CLIENT_ID,
+      client_secret: STRAVA_CLIENT_SECRET,
+      code,
       grant_type: "authorization_code",
     });
 
-    const { access_token, refresh_token, expires_at } = response.data;
-
-    // Desa a Firestore
-    await saveTokensToFirestore(userId, access_token, refresh_token, expires_at);
-
-    return access_token;
-  } catch (error) {
-    console.error("Error obtenint token de Strava:", error);
+    const data = response.data;
+    if (data.access_token) {
+      // Guardamos tokens en Firestore
+      const userRef = doc(db, "users", userId);
+      await setDoc(
+        userRef,
+        {
+          strava: {
+            access_token: data.access_token,
+            refresh_token: data.refresh_token,
+            expires_at: data.expires_at, // fecha UNIX de caducidad
+          },
+        },
+        { merge: true }
+      );
+      return data.access_token;
+    }
+    return null;
+  } catch (err) {
+    console.error("Error en exchangeCodeForToken:", err);
     return null;
   }
 }
 
 /**
- * Retorna un access_token vàlid per a l'usuari 'userId'.
- *  - Llegeix de Firestore
- *  - Si NO hi ha token, retorna null
- *  - Si el token és caducat, fa 'refresh' i actualitza Firestore
- *  - Retorna el 'access_token' vàlid o null si falla
- * @param {string} userId
- * @returns {Promise<string | null>}
+ * Recupera de Firestore el access_token de Strava para este usuario
+ * y, si está expirado, hace un "refresh" antes de devolverlo.
  */
 export async function getValidStravaToken(userId) {
-  const tokens = await getTokensFromFirestore(userId);
-  if (!tokens) {
-    return null;
-  }
-
-  const { access_token, refresh_token, expires_at } = tokens;
-  if (!access_token || !refresh_token || !expires_at) {
-    return null;
-  }
-
-  // Comprovem si ha caducat (temps en segons)
-  const nowInSeconds = Math.floor(Date.now() / 1000);
-  if (expires_at > nowInSeconds) {
-    // Encara no ha caducat
-    return access_token;
-  }
-
-  // Si ja és caducat, fem la crida de refresh
   try {
-    const refreshResp = await axios.post("https://www.strava.com/api/v3/oauth/token", {
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
+    const userRef = doc(db, "users", userId);
+    const snapshot = await getDoc(userRef);
+
+    if (!snapshot.exists()) {
+      return null;
+    }
+    const userData = snapshot.data();
+    const stravaData = userData.strava;
+    if (!stravaData) {
+      return null;
+    }
+
+    const { access_token, refresh_token, expires_at } = stravaData;
+    const now = Math.floor(Date.now() / 1000);
+
+    // Si todavía no ha caducado, lo devolvemos tal cual
+    if (now < expires_at) {
+      return access_token;
+    }
+
+    // Si ya está caducado, lo refrescamos con Strava
+    const response = await axios.post("https://www.strava.com/oauth/token", {
+      client_id: STRAVA_CLIENT_ID,
+      client_secret: STRAVA_CLIENT_SECRET,
       grant_type: "refresh_token",
-      refresh_token: refresh_token,
+      refresh_token,
     });
 
-    const {
-      access_token: newAccess,
-      refresh_token: newRefresh,
-      expires_at: newExpires,
-    } = refreshResp.data;
-
-    // Desa els nous valors a Firestore
-    await saveTokensToFirestore(userId, newAccess, newRefresh, newExpires);
-
-    return newAccess;
+    const data = response.data;
+    if (data.access_token) {
+      // Guardar el nuevo token en Firestore
+      await setDoc(
+        userRef,
+        {
+          strava: {
+            access_token: data.access_token,
+            refresh_token: data.refresh_token,
+            expires_at: data.expires_at,
+          },
+        },
+        { merge: true }
+      );
+      return data.access_token;
+    }
+    return null;
   } catch (err) {
-    console.error("Error refrescant el token de Strava:", err);
+    console.error("Error en getValidStravaToken:", err);
     return null;
   }
 }

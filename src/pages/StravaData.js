@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 import polyline from "@mapbox/polyline";
+import "./stravaData.css";
 
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { exchangeCodeForToken, getValidStravaToken } from "./stravaAuth";
+
+// ⬇️ Importem TOTES les funcions directament des de stravaApi:
+import {
+  exchangeCodeForToken,
+  getValidStravaToken,
+  getAthleteData,
+  getActivities,
+} from "./stravaApi";
+
 import { GOOGLE_API_KEY } from "./apiKeys";
 
-const StravaData = () => {
+function StravaData() {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
 
@@ -17,10 +25,9 @@ const StravaData = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Estat on guardarem l’usuari un cop Firebase Auth el detecti
+  // Control d’usuari (Firebase)
   const [currentUser, setCurrentUser] = useState(undefined);
 
-  // Escoltem canvis d’auth: quan hi hagi usuari, l’assignem a currentUser
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user || null);
@@ -28,27 +35,21 @@ const StravaData = () => {
     return () => unsubscribe();
   }, []);
 
-  // Helper per cridar l'API de Strava i omplir athlete / activities
   const fetchStravaData = async (token) => {
     try {
       setLoading(true);
-      console.log("fetchStravaData -> Cridem l'API de Strava amb token:", token);
+      console.log("fetchStravaData -> token:", token);
 
-      const athleteResp = await axios.get("https://www.strava.com/api/v3/athlete", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAthlete(athleteResp.data);
+      // Obtenim dades de l’atleta
+      const athleteData = await getAthleteData(token);
+      setAthlete(athleteData);
 
-      const activitiesResp = await axios.get(
-        "https://www.strava.com/api/v3/athlete/activities",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setActivities(activitiesResp.data || []);
+      // Obtenim activitats
+      const activitiesData = await getActivities(token);
+      setActivities(activitiesData || []);
 
-      console.log("Atleta:", athleteResp.data);
-      console.log("Activitats:", activitiesResp.data);
+      console.log("Atleta:", athleteData);
+      console.log("Activitats:", activitiesData);
     } catch (err) {
       console.error("Error fetchStravaData:", err);
       setError("Error carregant dades de Strava.");
@@ -57,14 +58,13 @@ const StravaData = () => {
     }
   };
 
-  // Quan tinguem `authorizationCode` (si Strava ens el dóna) i un usuari, fem la lògica de tokens
   useEffect(() => {
-    // Encara no sabem si hi ha usuari o no
+    // Esperem a saber si hi ha user (null o objecte).
     if (currentUser === undefined) return;
 
-    // Si directament no hi ha usuari loguejat, error
     if (currentUser === null) {
-      setError("Has d'estar identificat a l'app perquè puguem desar el token a Firestore.");
+      // Sense usuari loguejat no podem desar token a Firestore
+      setError("Has d'estar identificat a l'app per desar el token a Firestore.");
       return;
     }
 
@@ -77,6 +77,7 @@ const StravaData = () => {
             console.log("Obtingut newToken:", newToken);
             await fetchStravaData(newToken);
           } else {
+            console.log("No s'ha pogut obtenir l'access_token amb el code.");
             setError("No s'ha pogut obtenir l'access_token amb el code.");
           }
         } else {
@@ -90,13 +91,13 @@ const StravaData = () => {
           }
         }
       } catch (e) {
-        console.error("Error processant el token de Strava:", e);
+        console.error("Error processant token de Strava:", e);
         setError("Error processant el token de Strava.");
       }
     })();
   }, [authorizationCode, currentUser]);
 
-  // Helpers per decodificar polilínies i obtenir StreetView
+  // Helpers per decodificar polilínies
   const decodePolyline = (poly) => {
     try {
       return polyline.decode(poly);
@@ -110,7 +111,7 @@ const StravaData = () => {
   };
 
   return (
-    <div style={{ margin: "1rem" }}>
+    <div className="strava-container">
       <h1>Dades de Strava</h1>
 
       {loading && <p>Carregant dades...</p>}
@@ -132,10 +133,9 @@ const StravaData = () => {
         <div>
           <h2>Activitats</h2>
           {activities.map((act) => {
-            const coords =
-              act.map && act.map.summary_polyline
-                ? decodePolyline(act.map.summary_polyline)
-                : [];
+            const coords = act.map?.summary_polyline
+              ? decodePolyline(act.map.summary_polyline)
+              : [];
 
             let streetViewUrlStart = "";
             let streetViewUrlEnd = "";
@@ -145,20 +145,18 @@ const StravaData = () => {
               const [startLat, startLng] = coords[0];
               streetViewUrlStart = getStreetViewUrl(startLat, startLng);
             }
-
             if (coords.length > 1) {
               const [endLat, endLng] = coords[coords.length - 1];
               streetViewUrlEnd = getStreetViewUrl(endLat, endLng);
             }
-
             if (coords.length > 2) {
               const randomIndex = Math.floor(Math.random() * coords.length);
-              const [latRand, lngRand] = coords[randomIndex];
-              streetViewUrlRandom = getStreetViewUrl(latRand, lngRand);
+              const [randLat, randLng] = coords[randomIndex];
+              streetViewUrlRandom = getStreetViewUrl(randLat, randLng);
             }
 
             return (
-              <div key={act.id} style={{ marginBottom: "1rem" }}>
+              <div key={act.id} className="activity-block">
                 <h3>{act.name}</h3>
                 <p>Distància: {act.distance} m</p>
                 <p>Temps: {act.moving_time} s</p>
@@ -211,6 +209,6 @@ const StravaData = () => {
       )}
     </div>
   );
-};
+}
 
 export default StravaData;

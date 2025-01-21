@@ -1,0 +1,133 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6; /* Fondo claro */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa tota l'altura de la finestra */
+  }
+  
+  /* Contenedor principal per a StravaData */
+  .strava-container {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    padding: 40px 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 10px auto; /* Margen superior i inferior */
+    display: flex; /* Flexbox per centrar */
+    flex-direction: column; /* Col·loca els elements en columna */
+    align-items: center; /* Centra horitzontalment */
+    gap: 20px; /* Espai uniforme entre elements */
+  }
+  
+  /* Títol principal */
+  .strava-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 10%;
+  }
+  
+  /* Text de càrrega i errors */
+  .loading-text,
+  .error-text {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .loading-text {
+    color: #555;
+  }
+  
+  .error-text {
+    color: red;
+  }
+  
+  /* Dades d'atleta */
+  .athlete-data {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .athlete-data h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #444;
+  }
+  
+  .athlete-data p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  /* Dades d'activitats */
+  .activities-container {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10%;
+  }
+  
+  .activities-container h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #444;
+  }
+  
+  .activity {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .activity h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .activity p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Imatges de StreetView */
+  .streetview-image {
+    margin-top: 15px;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Botons */
+  .refresh-button {
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .refresh-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
