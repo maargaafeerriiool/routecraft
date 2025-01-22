@@ -12,8 +12,8 @@ function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-      navigate('/login'); // Automatically redirect to Login after splash screen
-    }, 1000); // Adjust the time as needed
+      navigate('/carousel'); // Automatically redirect to Login after splash screen
+    }, 5000); // Adjust the time as needed
   
     return () => clearTimeout(timer);
   }, [navigate]);

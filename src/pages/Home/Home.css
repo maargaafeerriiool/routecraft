@@ -1,6 +1,15 @@
 .home-background {
   position: relative;
 }
+.home-container {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 40px 40px;
+  text-align: center;
+  max-width: 450px;
+  margin: 10px auto;
+}
 
 .splash-screen {
   position: absolute;

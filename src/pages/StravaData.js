@@ -131,7 +131,7 @@ function StravaData() {
 
       {activities.length > 0 && (
         <div>
-          <h2>Activitats</h2>
+          <h2>ACTIVITATS</h2>
           {activities.map((act) => {
             const coords = act.map?.summary_polyline
               ? decodePolyline(act.map.summary_polyline)

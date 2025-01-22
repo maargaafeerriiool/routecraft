@@ -45,12 +45,10 @@ const Signin = ({ setUser }) => {
       if (setUser) setUser(true);
 
       // 6) Esperem un moment perquè Firebase consolidi l’usuari
-      setTimeout(() => {
-        // Redirigim a l’OAuth de Strava
-        window.location.href = 
-          `https://www.strava.com/oauth/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read`;
-      }, 500);
+      // Redirigir a la pantalla de bienvenida
 
+      navigate("/welcome");
+  
     } catch (error) {
       console.error("Error signing in:", error.message);
       alert(error.message);

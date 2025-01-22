@@ -1,133 +1,181 @@
-/* General */
+/* =====================
+   ESTILOS GENERALES
+===================== */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f4f6; /* Fondo claro */
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ocupa tota l'altura de la finestra */
-  }
-  
-  /* Contenedor principal per a StravaData */
-  .strava-container {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    padding: 40px 40px;
-    text-align: center;
-    max-width: 600px;
-    margin: 10px auto; /* Margen superior i inferior */
-    display: flex; /* Flexbox per centrar */
-    flex-direction: column; /* Col·loca els elements en columna */
-    align-items: center; /* Centra horitzontalment */
-    gap: 20px; /* Espai uniforme entre elements */
-  }
-  
-  /* Títol principal */
-  .strava-container h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    padding: 10%;
-  }
-  
-  /* Text de càrrega i errors */
-  .loading-text,
-  .error-text {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .loading-text {
-    color: #555;
-  }
-  
-  .error-text {
-    color: red;
-  }
-  
-  /* Dades d'atleta */
-  .athlete-data {
-    background: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100%;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .athlete-data h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #444;
-  }
-  
-  .athlete-data p {
-    font-size: 16px;
-    margin: 5px 0;
-    color: #555;
-  }
-  
-  /* Dades d'activitats */
-  .activities-container {
-    background: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100%;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 10%;
-  }
-  
-  .activities-container h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #444;
-  }
-  
-  .activity {
-    margin-bottom: 15px;
-    padding: 10px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .activity h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  
-  .activity p {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  /* Imatges de StreetView */
-  .streetview-image {
-    margin-top: 15px;
-    width: 100%;
-    height: 200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Botons */
-  .refresh-button {
-    background: linear-gradient(90deg, #4caf50, #81c784);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .refresh-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f3f4f6; /* Color de fondo suave */
+  margin: 0;
+  padding: 0;
+
+  /* Si quieres centrar todo vertical y horizontal:
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+  */
+}
+
+/* =====================
+   CONTENEDOR PRINCIPAL
+===================== */
+.welcome-container {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 40px 40px;
+  width: 450px;
+  margin: 20px auto; 
+  min-height: 600px; /* Ajusta a tu gusto */
+  text-align: center; 
+  /* Si quieres más alto:
+     height: 900px;
+  */
+}
+
+/* Si utilizas un contenedor 'strava-container' para el contenido interior */
+.strava-container h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+/* =====================
+   CONTENEDOR DE ACTIVIDADES
+===================== */
+.activities-container {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%; 
+  text-align: left;
+  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
+  max-height: 60vh; /* Limitar alto si quieres scrollbar */
+  overflow-y: auto;
+  box-sizing: border-box; /* Para que padding no desborde */
+}
+
+/* Scrollbar (opcional) */
+.activities-container::-webkit-scrollbar {
+  width: 6px;
+}
+.activities-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.activities-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+.activities-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* =====================
+   BLOQUES DE ACTIVIDAD
+===================== */
+.activity-block {
+  display: flex;         /* Usamos flex en lugar de grid, para distribuir imágenes y texto */
+  gap: 20px;             /* Espacio entre imagen y texto */
+  align-items: center;   
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
+}
+
+/* Dentro de cada .activity-block puedes tener 1-2 imágenes, ajusta como quieras */
+.activity-block img {
+  width: 100px;  /* Ajusta según necesites */
+  height: 100px; /* Mismo alto que ancho para cuadrar */
+  object-fit: cover; /* Recorta la imagen manteniendo proporción */
+  border-radius: 8px;
+  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
+}
+
+/* Contenedor del texto (Distancia, Tiempo, etc.) */
+.activity-block .text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.activity-block h3 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 0;
+}
+
+.activity-block p {
+  font-size: 0.95em;
+  color: #666;
+  margin: 0;
+}
+
+.activities-container {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 40px 40px;
+  width: 450px;
+  margin: 20px auto; 
+  min-height: 600px; /* Ajusta a tu gusto */
+  text-align: center; 
+}
+
+/* =====================
+   IMÁGENES DE STREETVIEW (OPCIONALES)
+===================== */
+.streetview-image {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
+}
+
+/* =====================
+   BOTÓN REFRESH
+===================== */
+.refresh-button {
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 20px;
+}
+.refresh-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
+}
+
+/* =====================
+   SELECT (DESPLEGABLE) 
+===================== */
+select {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+select:hover {
+  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
+}
+select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 2% rgba(76, 175, 80, 0.5);
+}
