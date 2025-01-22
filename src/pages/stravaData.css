@@ -179,3 +179,22 @@ select:focus {
   border-color: #4caf50;
   box-shadow: 0 0 2% rgba(76, 175, 80, 0.5);
 }
+
+/* Botón */
+.edit-button {
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+  
+.edit-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}

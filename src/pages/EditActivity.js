@@ -1,108 +1,76 @@
-  import React, { useState, useEffect } from "react";
-  import { useParams, useNavigate } from "react-router-dom";
-  import { doc, getDoc, setDoc } from "firebase/firestore";
-  import { db } from "./firebase"; // Importa la instància de Firestore
+import React, { useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "./firebase"; // Importa la configuració de Firebase
 
-  function EditActivity() {
-    const { activityId } = useParams(); // Obté l'ID de l'activitat des de la URL
-    const navigate = useNavigate();
+const EditActivity = ({ activity, onSave }) => {
+  const [description, setDescription] = useState(activity.description || "");
+  const [rating, setRating] = useState(activity.rating || 0);
+  const [loading, setLoading] = useState(false);
 
-    const [description, setDescription] = useState("");
-    const [rating, setRating] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+  const handleSave = async () => {
+    // Validació dels camps
+    if (rating < 1 || rating > 5) {
+      alert("La valoració ha de ser entre 1 i 5");
+      return;
+    }
 
-    // Carrega la informació existent de l'activitat si ja té descripció i puntuació
-    useEffect(() => {
-      const fetchActivityData = async () => {
-        try {
-          setLoading(true);
-          const docRef = doc(db, "activities", activityId); // Ruta al document a Firebase
-          const docSnap = await getDoc(docRef);
+    if (description.trim() === "") {
+      alert("La descripció no pot estar buida.");
+      return;
+    }
 
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            setDescription(data.description || "");
-            setRating(data.rating || 0);
-          }
-        } catch (err) {
-          setError("No s'ha pogut carregar la informació de l'activitat.");
-        } finally {
-          setLoading(false);
-        }
-      };
+    setLoading(true);
 
-      fetchActivityData();
-    }, [activityId]);
+    try {
+      // Referència al document de l'activitat a Firestore
+      const activityDocRef = doc(db, "activities", activity.id);
 
-    // Funció per guardar la descripció i puntuació a Firebase
-    const handleSave = async () => {
-      try {
-        setLoading(true);
-        const docRef = doc(db, "activities", activityId); // Ruta al document a Firebase
-        await setDoc(docRef, { description, rating }, { merge: true }); // Desem o actualitzem les dades
-        navigate("/"); // Redirigeix a la pàgina principal després de guardar
-      } catch (err) {
-        setError("No s'ha pogut desar la informació.");
-      } finally {
-        setLoading(false);
-      }
-    };
+      // Actualitza els camps de l'activitat
+      await updateDoc(activityDocRef, {
+        description,
+        rating,
+      });
 
-    return (
-      <div style={{ padding: "2em", textAlign: "center" }}>
-        <h1>Editar Activitat</h1>
-        {loading && <p>Carregant...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      alert("Activitat actualitzada correctament!");
 
-        <div style={{ margin: "2em 0" }}>
+      // Notifica al component pare
+      onSave({ ...activity, description, rating });
+    } catch (error) {
+      console.error("Error actualitzant l'activitat:", error);
+      alert("No s'ha pogut actualitzar l'activitat.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="edit-activity-container">
+      <h2>Edita Activitat</h2>
+      <form className="edit-activity-form" onSubmit={(e) => e.preventDefault()}>
+        <label>
+          <strong>Valoració (1-5):</strong>
+          <input
+            type="number"
+            value={rating}
+            min="1"
+            max="5"
+            onChange={(e) => setRating(Number(e.target.value))}
+          />
+        </label>
+        <label>
+          <strong>Descripció:</strong>
           <textarea
-            placeholder="Afegeix una descripció"
+            rows="5"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            style={{
-              width: "80%",
-              height: "100px",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-
-        <div style={{ margin: "2em 0" }}>
-          <p>Puntuació:</p>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span
-              key={star}
-              onClick={() => setRating(star)}
-              style={{
-                fontSize: "2em",
-                cursor: "pointer",
-                color: star <= rating ? "#f5c518" : "#ccc",
-              }}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-
-        <button
-          onClick={handleSave}
-          style={{
-            padding: "10px 20px",
-            fontSize: "1.2em",
-            backgroundColor: "#4caf50",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Desa
+          ></textarea>
+        </label>
+        <button type="button" onClick={handleSave} disabled={loading}>
+          {loading ? "Guardant..." : "Desa canvis"}
         </button>
-      </div>
-    );
-  }
+      </form>
+    </div>
+  );
+};
 
-  export default EditActivity;
+export default EditActivity;

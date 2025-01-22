@@ -13,6 +13,8 @@ import Home from "./pages/Home/Home"; // Assegura't que la ruta és correcta
 import Carousel from "./components/Carousel/Carousel";
 import Signin from "./pages/Signin/Signin";
 import StravaData from "./pages/StravaData";
+import EditActivity from "./pages//EditActivity"; // Importa el component
+
 
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/signin" />;
@@ -34,6 +36,9 @@ function App() {
             <Route path="/welcome" element={<ProtectedRoute user={user}><Welcome /></ProtectedRoute>}/>
             <Route path="/payment" element={<ProtectedRoute user={user}><Payment /> </ProtectedRoute>} />
             <Route path="/stravadata" element={<StravaData />} />
+            <Route path="/edit-activity/" element={<EditActivity />} />
+
+            
             {/* Afegeix altres rutes si n'hi ha */}
           </Routes>
         </div>

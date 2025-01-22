@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom"; // Afegim useNavigate
 import polyline from "@mapbox/polyline";
 import "./stravaData.css";
 
@@ -25,8 +25,10 @@ function StravaData() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Control d’usuari (Firebase)
-  const [currentUser, setCurrentUser] = useState(undefined);
+ // Control d’usuari (Firebase)
+ const [currentUser, setCurrentUser] = useState(undefined);
+
+ const navigate = useNavigate(); // Inicialitzem useNavigate
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -112,8 +114,7 @@ function StravaData() {
 
   return (
     <div className="strava-container">
-      <h1>Dades de Strava</h1>
-
+      <h1>DADES DE STRAVA</h1>
       {loading && <p>Carregant dades...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -124,7 +125,7 @@ function StravaData() {
             {athlete.firstname} {athlete.lastname}
           </p>
           <p>
-            {athlete.city}, {athlete.country}
+            {athlete.city} {athlete.country}
           </p>
         </div>
       )}
@@ -207,6 +208,14 @@ function StravaData() {
       {!loading && !athlete && !activities.length && !error && (
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}
+      {/* Botó per editar activitat */}
+        <button
+                  onClick={() => navigate(`/edit-activity/${act.id}`)}
+                  className="edit-button"
+                >
+                  Edita Activitat
+                </button>
+
     </div>
   );
 }
