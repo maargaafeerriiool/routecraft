@@ -157,41 +157,32 @@ const StravaData = () => {
       }
     })();
   }, [authorizationCode, currentUser]);
-
   return (
     <div className="strava-container">
       <h1 className="logo">ROUTECRAFT</h1>
       {loading && <p>Carregant dades...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-
+  
       {athlete && (
         <div className="athlete-info">
           <h2 className="athlete-title">ATLETA</h2>
           <p className="athlete-detail">
-            <span className="athlete-label">NOM:</span> {athlete.firstname} {athlete.lastname}
+            <span className="athlete-label">NOM:</span>{" "}
+            {athlete.firstname} {athlete.lastname}
           </p>
           <p className="athlete-detail">
             <span className="athlete-label">PAÍS:</span> {athlete.city} {athlete.country}
           </p>
           <p className="athlete-detail">
-            <span className="athlete-label">GÈNERE:</span> {athlete.sex === "M" ? "Masculí" : athlete.sex === "F" ? "Femení" : "No especificat"}
+            <span className="athlete-label">GÈNERE:</span>{" "}
+            {athlete.sex === "M" ? "Masculí" : athlete.sex === "F" ? "Femení" : "No especificat"}
           </p>
           <p className="athlete-detail">
             <span className="athlete-label">TOTAL D'ACTIVITATS:</span> {activities.length}
           </p>
-
-        {/* Botó col·locat dins el contenidor */}
-          <div className="footer-button-container">
-          <button
-            onClick={() => navigate(`/edit-activity?`)}
-            className="edit-button"
-          >
-            EDITAR ACTIVITAT
-          </button>
-          </div>
         </div>
       )}
-
+  
       {activities.length > 0 && (
         <div>
           <h2 className="athlete-title">ACTIVITATS</h2>
@@ -200,7 +191,22 @@ const StravaData = () => {
           ))}
         </div>
       )}
-
+  
+      {/* Botón debajo de las actividades */}
+      <div className="footer-button-container" style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+        <button
+          onClick={() => navigate("/edit-activity")}
+          className="edit-button"
+        >
+          EDITAR ACTIVITAT
+        </button>
+      </div>
+  
       {!loading && !athlete && !activities.length && !error && (
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}

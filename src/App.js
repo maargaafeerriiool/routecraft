@@ -14,6 +14,8 @@ import Carousel from "./components/Carousel/Carousel";
 import Signin from "./pages/Signin/Signin";
 import StravaData from "./pages/StravaData";
 import EditActivity from "./pages/EditActivity"; // Importa el component
+import ActivityReviews from "./pages/ActivityReviews"; // Importa el component
+
 
 
 const ProtectedRoute = ({ user, children }) => {
@@ -37,6 +39,7 @@ function App() {
             <Route path="/payment" element={<ProtectedRoute user={user}><Payment /> </ProtectedRoute>} />
             <Route path="/stravadata" element={<StravaData />} />
             <Route path="/edit-activity" element={<EditActivity />} />
+            <Route path="/reviews" element={<ActivityReviews />} />
 
             
             {/* Afegeix altres rutes si n'hi ha */}
