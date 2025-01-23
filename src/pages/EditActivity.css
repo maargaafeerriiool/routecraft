@@ -1,36 +1,76 @@
+.activity-dropdown {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px auto;
+  display: block;
+}
+
+.activity-dropdown:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
 .edit-activity-container {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    padding: 40px;
-    text-align: center;
-    width: 450px;
-    margin: 10px auto;
-    height: auto;
-  }
-  
-  .edit-activity-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  textarea {
-    resize: none;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-  
-  button {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background: #45a049;
-  }
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 40px 40px;
+  text-align: center;
+  width: 450px;
+  margin: 10px auto;
+  height:900px;
+  padding-bottom: 100px; /* Espai per al botó */
+
+}
+
+.edit-activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 30px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  color: #ccc;
+}
+
+.star.selected {
+  color: #FFD700;
+}
+
+button {
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #45a049, #4CAF50);
+}

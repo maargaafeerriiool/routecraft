@@ -11,7 +11,6 @@ import {
   getActivities,
 } from "./stravaApi";
 import { GOOGLE_API_KEY } from "./apiKeys";
-
 // Helpers
 const formatDistance = (meters) => (meters / 1000).toFixed(2); // Metres a quilòmetres
 const formatTime = (seconds) => {
@@ -29,11 +28,13 @@ const decodePolyline = (poly) => {
     return [];
   }
 };
-const getStreetViewUrl = (lat, lng) => 
+const getStreetViewUrl = (lat, lng) =>
   `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${GOOGLE_API_KEY}`;
 
 // Components
 const Activity = ({ activity }) => {
+  const [zoomedImage, setZoomedImage] = useState(null); // Estat per a gestionar el zoom
+
   const coords = activity.map?.summary_polyline
     ? decodePolyline(activity.map.summary_polyline)
     : [];
@@ -44,27 +45,55 @@ const Activity = ({ activity }) => {
     ? getStreetViewUrl(coords[coords.length - 1][0], coords[coords.length - 1][1])
     : null;
 
+  let streetViewUrlRandom = null;
+  if (coords.length > 2) {
+    const randomIndex = Math.floor(Math.random() * coords.length);
+    const [latRand, lngRand] = coords[randomIndex];
+    streetViewUrlRandom = getStreetViewUrl(latRand, lngRand);
+  }
+
+  const handleImageClick = (url) => {
+    setZoomedImage(url); // Assigna la imatge a ampliar
+  };
+
+  const handleCloseZoom = () => {
+    setZoomedImage(null); // Tanca el zoom
+  };
+
   return (
     <div className="activity-block">
       <div className="activity-details">
         <h3>{activity.name}</h3>
-        <h6>🏃 Distància: {formatDistance(activity.distance)} km</h6>
-        <h6>⏱️ Temps: {formatTime(activity.moving_time)}</h6>
+        <h6>Distància🏃: {formatDistance(activity.distance)} km</h6>
+        <h6>Temps⏱️: {formatTime(activity.moving_time)}</h6>
       </div>
       <div className="activity-images">
         {streetViewUrlStart && (
-          <div className="image-container">
+          <div className="image-container" onClick={() => handleImageClick(streetViewUrlStart)}>
             <img src={streetViewUrlStart} alt="Street View Inici" />
             <div className="image-label">Inici</div>
           </div>
         )}
         {streetViewUrlEnd && (
-          <div className="image-container">
+          <div className="image-container" onClick={() => handleImageClick(streetViewUrlEnd)}>
             <img src={streetViewUrlEnd} alt="Street View Final" />
             <div className="image-label">Final</div>
           </div>
         )}
+        {streetViewUrlRandom && (
+          <div className="image-container" onClick={() => handleImageClick(streetViewUrlRandom)}>
+            <img src={streetViewUrlRandom} alt="Street View Aleatori" />
+            <div className="image-label">Aleatori</div>
+          </div>
+        )}
       </div>
+
+      {/* Zoom Modal */}
+      {zoomedImage && (
+        <div className="zoom-overlay" onClick={handleCloseZoom}>
+          <img src={zoomedImage} alt="Imatge ampliada" className="zoomed-image" />
+        </div>
+      )}
     </div>
   );
 };
@@ -138,8 +167,9 @@ const StravaData = () => {
       {athlete && (
         <div>
           <h2>ATLETA</h2>
-          <h4> Nom:</h4><p>{athlete.firstname} {athlete.lastname}</p>
-          <h7> País:{athlete.city} {athlete.country}</h7>
+          <h4>Nom:</h4>
+          <p>{athlete.firstname} {athlete.lastname}</p>
+          <h7>País: {athlete.city} {athlete.country}</h7>
         </div>
       )}
 
@@ -156,12 +186,16 @@ const StravaData = () => {
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}
 
+     
+    {/* Botó col·locat dins el contenidor */}
+    <div className="footer-button-container">
       <button
-        onClick={() => navigate(`/edit-activity`)}
+        onClick={() => navigate(`/edit-activity?`)}
         className="edit-button"
       >
         EDITAR ACTIVITAT
       </button>
+    </div>
     </div>
   );
 };

@@ -19,8 +19,13 @@ h1, h2, h3, h6 {
   width: 450px;
   margin: 10px auto;
   height:900px;
-}
+  padding-bottom: 100px; /* Espai per al botó */
 
+}
+.activities-container {
+  max-height: calc(100vh - 300px); /* Ajusta segons la mida total */
+  overflow-y: auto;
+}
 .logo {
   font-size: 28px;
   font-weight: 900;
@@ -133,21 +138,31 @@ h2 {
 }
 
 
+.footer-button-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .edit-button {
-  background: linear-gradient(90deg, #ff6b6b, #ffa07a);
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  padding: 12px 30px;
+  padding: 10px 30px;
   border: none;
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .edit-button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+
