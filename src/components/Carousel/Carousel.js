@@ -53,7 +53,6 @@ const Carousel = () => {
           SIGN UP
         </button>
         </div>
-      <Footer /> {/* Footer integrat dins del container */}
     </div>
   );
 };

@@ -1,59 +1,65 @@
-.activity-dropdown {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 20px auto;
-  display: block;
-}
-
-.activity-dropdown:focus {
-  border-color: #4CAF50;
-  outline: none;
-}
-
 .edit-activity-container {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  padding: 40px 40px;
-  text-align: center;
-  width: 450px;
-  margin: 10px auto;
-  height:900px;
-  padding-bottom: 100px; /* Espai per al botó */
-}
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    padding: 40px 40px;
+    text-align: center;
+    width: 450px;
+    margin: 10px auto;
+    height:900px;
+    padding-bottom: 100px; /* Espai per al botó */
+  }
 
 .edit-activity-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   text-align: left;
+  margin-top: 20px;
 }
 
+.edit-activity-form label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.edit-activity-form input,
 textarea {
   width: 100%;
-  resize: vertical;
   border-radius: 10px;
   border: 1px solid #ddd;
   padding: 10px;
   font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.edit-activity-form input:focus,
+textarea:focus {
+  border-color: #ff6b6b;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
 }
 
 .star-rating {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
-  margin-top: 10px;
 }
 
 .star {
   font-size: 30px;
   cursor: pointer;
-  transition: color 0.2s ease;
   color: #ccc;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.2);
 }
 
 .star.selected {
@@ -61,15 +67,42 @@ textarea {
 }
 
 button {
-  background: linear-gradient(90deg, #4CAF50, #45a049);
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a);
   color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 10px;
   font-size: 16px;
+  font-weight: bold;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-  background: linear-gradient(90deg, #45a049, #4CAF50);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.edit-button {
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }

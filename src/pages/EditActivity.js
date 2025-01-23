@@ -3,6 +3,7 @@ import "./EditActivity.css";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { db } from "./firebase"; // Asegúrate de tener tu configuración de Firebase
 import { collection, addDoc } from "firebase/firestore"; 
+import { CLIENT_ID } from "./apiKeys"; // Importa tu CLIENT_ID
 
 const EditActivity = ({ activity, onSave }) => {
   const [description, setDescription] = useState(activity?.description || "");
@@ -75,17 +76,19 @@ const EditActivity = ({ activity, onSave }) => {
           ))}
         </div>
 
-        <button type="submit">Guardar Canvis</button>
+        <button type="submit">GUARDAR CANVIS</button>
+       
+        <button
+          className="edit-button"
+          onClick={() => {
+            window.location.href = `https://www.strava.com/oauth/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read`;
+          }}
+        >
+          TORNAR ENRRERE
+        </button>
+ 
       </form>
 
-      <div className="footer-button-container">
-      <button
-        onClick={() => navigate(`/edit-activity?`)}
-        className="edit-button"
-      >
-        TORNAR ENRRERE
-       </button>
-    </div>
     </div>
   );
 };

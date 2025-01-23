@@ -179,6 +179,16 @@ const StravaData = () => {
           <p className="athlete-detail">
             <span className="athlete-label">TOTAL D'ACTIVITATS:</span> {activities.length}
           </p>
+
+        {/* Botó col·locat dins el contenidor */}
+          <div className="footer-button-container">
+          <button
+            onClick={() => navigate(`/edit-activity?`)}
+            className="edit-button"
+          >
+            EDITAR ACTIVITAT
+          </button>
+          </div>
         </div>
       )}
 
@@ -194,17 +204,6 @@ const StravaData = () => {
       {!loading && !athlete && !activities.length && !error && (
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}
-
-     
-    {/* Botó col·locat dins el contenidor */}
-    <div className="footer-button-container">
-      <button
-        onClick={() => navigate(`/edit-activity?`)}
-        className="edit-button"
-      >
-        EDITAR ACTIVITAT
-      </button>
-    </div>
     </div>
   );
 };
