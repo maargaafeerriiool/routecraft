@@ -33,7 +33,7 @@ const EditActivity = ({ activity, onSave }) => {
       });
       
       // Navegación tras guardar
-      navigate("/ActivityReviews");
+      navigate("/edit-activity?");
     } catch (error) {
       console.error("Error al agregar documento:", error);
     }
@@ -88,7 +88,7 @@ const EditActivity = ({ activity, onSave }) => {
         <div className="footer-button-container">
           <button
             type="button"
-            className="edit-button"
+            
             onClick={() => {
               window.location.href = `https://www.strava.com/oauth/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000/stravadata&scope=read,activity:read`;
             }}

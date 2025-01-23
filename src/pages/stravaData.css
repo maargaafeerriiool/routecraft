@@ -18,28 +18,8 @@ h1, h2, h3, h6 {
   text-align: center;
   width: 450px;
   margin: 10px auto;
-  height:900px;
   padding-bottom: 100px; /* Espai per al botó */
 }
-.activities-container {
-  max-height: calc(100vh - 300px); /* Ajusta segons la mida total */
-  overflow-y: auto;
-}
-.logo {
-  font-size: 28px;
-  font-weight: 900;
-  color: #ff6b6b;
-  margin-bottom: 20px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
 
 .activities-container {
   max-height: 500px; /* Ajusta segons sigui necessari */
@@ -136,13 +116,12 @@ h2 {
   border-top-right-radius: 8px;
 }
 
-
 .footer-button-container {
-  position: absolute;
-  bottom: 20px;
+  bottom: 20px; /* Distància des de la part inferior */
   left: 50%;
-  transform: translateX(-50%);
-  /* … */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .edit-button {
@@ -150,7 +129,7 @@ h2 {
   color: white;
   font-size: 18px;
   font-weight: bold;
-  padding: 10px 30px;
+  padding: 10px 25px;
   border: none;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -162,6 +141,7 @@ h2 {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+
 .athlete-info {
   background: #f9fafb; /* Color de fons clar */
   border-radius: 10px; /* Cantonades arrodonides */
@@ -179,7 +159,7 @@ h2 {
   text-align: center;
 }
 
-.athlete-details {
+.athlete-detail {
   font-size: 16px;
   color: #333; /* Color de text principal */
   line-height: 1.6; /* Separació entre línies */
@@ -188,16 +168,4 @@ h2 {
 .athlete-label {
   font-weight: bold; /* Etiquetes destacades */
   margin-bottom: 5px;
-}
-
-.athlete-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #555; /* Color més suau */
-}
-
-.athlete-location {
-  font-size: 16px;
-  color: #666; /* Color encara més suau */
-  margin-top: 10px;
 }

@@ -11,6 +11,7 @@ import {
   getActivities,
 } from "./stravaApi";
 import { GOOGLE_API_KEY } from "./apiKeys";
+
 // Helpers
 const formatDistance = (meters) => (meters / 1000).toFixed(2); // Metres a quilòmetres
 const formatTime = (seconds) => {
@@ -157,12 +158,13 @@ const StravaData = () => {
       }
     })();
   }, [authorizationCode, currentUser]);
+
   return (
     <div className="strava-container">
       <h1 className="logo">ROUTECRAFT</h1>
       {loading && <p>Carregant dades...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-  
+
       {athlete && (
         <div className="athlete-info">
           <h2 className="athlete-title">ATLETA</h2>
@@ -182,31 +184,26 @@ const StravaData = () => {
           </p>
         </div>
       )}
-  
+
       {activities.length > 0 && (
-        <div>
+        <div className="activities-container">
           <h2 className="athlete-title">ACTIVITATS</h2>
           {activities.map((activity) => (
             <Activity key={activity.id} activity={activity} />
           ))}
         </div>
       )}
-  
-      {/* Botón debajo de las actividades */}
-      <div className="footer-button-container" style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "20px",
-          }}
-        >
+
+      {/* Botó al final de la pàgina */}
+      <div >
         <button
           onClick={() => navigate("/edit-activity")}
-          className="edit-button"
+         
         >
           EDITAR ACTIVITAT
         </button>
       </div>
-  
+
       {!loading && !athlete && !activities.length && !error && (
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}
