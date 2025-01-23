@@ -1,0 +1,36 @@
+.edit-activity-container {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    text-align: center;
+    width: 450px;
+    margin: 10px auto;
+    height: auto;
+  }
+  
+  .edit-activity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  textarea {
+    resize: none;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #45a049;
+  }

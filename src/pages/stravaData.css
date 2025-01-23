@@ -1,200 +1,153 @@
-/* =====================
-   ESTILOS GENERALES
-===================== */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f3f4f6; /* Color de fondo suave */
+  font-family: "Poppins", sans-serif;
+  background-color: #f3f4f6;
   margin: 0;
   padding: 0;
-
-  /* Si quieres centrar todo vertical y horizontal:
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100vh;
-  */
 }
 
-/* =====================
-   CONTENEDOR PRINCIPAL
-===================== */
-.welcome-container {
+h1, h2, h3, h6 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.strava-container {
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   padding: 40px 40px;
+  text-align: center;
   width: 450px;
-  margin: 20px auto; 
-  min-height: 600px; /* Ajusta a tu gusto */
-  text-align: center; 
-  /* Si quieres más alto:
-     height: 900px;
-  */
+  margin: 10px auto;
+  height:900px;
 }
 
-/* Si utilizas un contenedor 'strava-container' para el contenido interior */
-.strava-container h1 {
-  font-size: 2em;
-  font-weight: bold;
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff6b6b;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h2 {
   color: #333;
-  margin-top: 0;
-  margin-bottom: 25px;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-/* =====================
-   CONTENEDOR DE ACTIVIDADES
-===================== */
+
 .activities-container {
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
-  width: 100%; 
-  text-align: left;
-  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
-  max-height: 60vh; /* Limitar alto si quieres scrollbar */
-  overflow-y: auto;
-  box-sizing: border-box; /* Para que padding no desborde */
+  max-height: 500px; /* Ajusta segons sigui necessari */
+  overflow-y: auto; /* Activa el desplaçament vertical */
+  padding: 10px;
+  margin: 20px 0;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Scrollbar (opcional) */
+/* Opcional: estil del scrollbar */
 .activities-container::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
+
 .activities-container::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 3px;
+  border-radius: 5px;
 }
+
 .activities-container::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 3px;
+  border-radius: 5px;
 }
+
 .activities-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-/* =====================
-   BLOQUES DE ACTIVIDAD
-===================== */
 .activity-block {
-  display: flex;         /* Usamos flex en lugar de grid, para distribuir imágenes y texto */
-  gap: 20px;             /* Espacio entre imagen y texto */
-  align-items: center;   
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
-}
-
-/* Dentro de cada .activity-block puedes tener 1-2 imágenes, ajusta como quieras */
-.activity-block img {
-  width: 100px;  /* Ajusta según necesites */
-  height: 100px; /* Mismo alto que ancho para cuadrar */
-  object-fit: cover; /* Recorta la imagen manteniendo proporción */
-  border-radius: 8px;
-  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
-}
-
-/* Contenedor del texto (Distancia, Tiempo, etc.) */
-.activity-block .text-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
+  align-items: center;
+  gap: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-block:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .activity-block h3 {
-  font-size: 1.2em;
   color: #333;
-  margin: 0;
-}
-
-.activity-block p {
-  font-size: 0.95em;
-  color: #666;
-  margin: 0;
-}
-
-.activities-container {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  padding: 40px 40px;
-  width: 450px;
-  margin: 20px auto; 
-  min-height: 600px; /* Ajusta a tu gusto */
-  text-align: center; 
-}
-
-/* =====================
-   IMÁGENES DE STREETVIEW (OPCIONALES)
-===================== */
-.streetview-image {
-  margin-top: 10px;
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
-}
-
-/* =====================
-   BOTÓN REFRESH
-===================== */
-.refresh-button {
-  background: linear-gradient(90deg, #4caf50, #81c784);
-  color: white;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 20px;
-}
-.refresh-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 2% 5% rgba(0, 0, 0, 0.2);
-}
-
-/* =====================
-   SELECT (DESPLEGABLE) 
-===================== */
-select {
-  padding: 10px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: #f9f9f9;
-  color: #333;
-  cursor: pointer;
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
-}
-select:hover {
-  box-shadow: 0 1% 2% rgba(0, 0, 0, 0.1);
-}
-select:focus {
-  outline: none;
-  border-color: #4caf50;
-  box-shadow: 0 0 2% rgba(76, 175, 80, 0.5);
-}
-
-/* Botón */
-.edit-button {
-  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12);
-  color: white;
   font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.activity-block h6 {
+  color: #666;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.activity-images {
+  display: flex; /* Posa les imatges en fila */
+  gap: 10px; /* Espai entre imatges */
+  justify-content: center; /* Centra les imatges */
+  margin-top: 10px;
+}
+
+.image-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-container .image-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  padding: 3px 0;
   font-weight: bold;
-  padding: 10px 30px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+
+.edit-button {
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 30px;
   border: none;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 20px;
 }
-  
+
 .edit-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }

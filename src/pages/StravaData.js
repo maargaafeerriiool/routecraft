@@ -1,22 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom"; // Afegim useNavigate
+import { useSearchParams, useNavigate } from "react-router-dom";
 import polyline from "@mapbox/polyline";
 import "./stravaData.css";
-
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-
-// ⬇️ Importem TOTES les funcions directament des de stravaApi:
 import {
   exchangeCodeForToken,
   getValidStravaToken,
   getAthleteData,
   getActivities,
 } from "./stravaApi";
-
 import { GOOGLE_API_KEY } from "./apiKeys";
 
-function StravaData() {
+// Helpers
+const formatDistance = (meters) => (meters / 1000).toFixed(2); // Metres a quilòmetres
+const formatTime = (seconds) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  if (minutes > 0) return `${minutes}m ${remainingSeconds}s`;
+  return `${remainingSeconds}s`;
+};
+const decodePolyline = (poly) => {
+  try {
+    return polyline.decode(poly);
+  } catch {
+    return [];
+  }
+};
+const getStreetViewUrl = (lat, lng) => 
+  `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${GOOGLE_API_KEY}`;
+
+// Components
+const Activity = ({ activity }) => {
+  const coords = activity.map?.summary_polyline
+    ? decodePolyline(activity.map.summary_polyline)
+    : [];
+  const streetViewUrlStart = coords[0]
+    ? getStreetViewUrl(coords[0][0], coords[0][1])
+    : null;
+  const streetViewUrlEnd = coords[coords.length - 1]
+    ? getStreetViewUrl(coords[coords.length - 1][0], coords[coords.length - 1][1])
+    : null;
+
+  return (
+    <div className="activity-block">
+      <div className="activity-details">
+        <h3>{activity.name}</h3>
+        <h6>🏃 Distància: {formatDistance(activity.distance)} km</h6>
+        <h6>⏱️ Temps: {formatTime(activity.moving_time)}</h6>
+      </div>
+      <div className="activity-images">
+        {streetViewUrlStart && (
+          <div className="image-container">
+            <img src={streetViewUrlStart} alt="Street View Inici" />
+            <div className="image-label">Inici</div>
+          </div>
+        )}
+        {streetViewUrlEnd && (
+          <div className="image-container">
+            <img src={streetViewUrlEnd} alt="Street View Final" />
+            <div className="image-label">Final</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Component principal
+const StravaData = () => {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
 
@@ -24,11 +78,9 @@ function StravaData() {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
- // Control d’usuari (Firebase)
- const [currentUser, setCurrentUser] = useState(undefined);
-
- const navigate = useNavigate(); // Inicialitzem useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -40,18 +92,10 @@ function StravaData() {
   const fetchStravaData = async (token) => {
     try {
       setLoading(true);
-      console.log("fetchStravaData -> token:", token);
-
-      // Obtenim dades de l’atleta
       const athleteData = await getAthleteData(token);
-      setAthlete(athleteData);
-
-      // Obtenim activitats
       const activitiesData = await getActivities(token);
+      setAthlete(athleteData);
       setActivities(activitiesData || []);
-
-      console.log("Atleta:", athleteData);
-      console.log("Activitats:", activitiesData);
     } catch (err) {
       console.error("Error fetchStravaData:", err);
       setError("Error carregant dades de Strava.");
@@ -61,11 +105,8 @@ function StravaData() {
   };
 
   useEffect(() => {
-    // Esperem a saber si hi ha user (null o objecte).
     if (currentUser === undefined) return;
-
     if (currentUser === null) {
-      // Sense usuari loguejat no podem desar token a Firestore
       setError("Has d'estar identificat a l'app per desar el token a Firestore.");
       return;
     }
@@ -73,24 +114,13 @@ function StravaData() {
     (async () => {
       try {
         if (authorizationCode) {
-          console.log("Hi ha code -> exchangeCodeForToken...");
           const newToken = await exchangeCodeForToken(authorizationCode, currentUser.uid);
-          if (newToken) {
-            console.log("Obtingut newToken:", newToken);
-            await fetchStravaData(newToken);
-          } else {
-            console.log("No s'ha pogut obtenir l'access_token amb el code.");
-            setError("No s'ha pogut obtenir l'access_token amb el code.");
-          }
+          if (newToken) await fetchStravaData(newToken);
+          else setError("");
         } else {
-          console.log("No hi ha code -> getValidStravaToken...");
           const validToken = await getValidStravaToken(currentUser.uid);
-          if (validToken) {
-            console.log("Obtingut validToken:", validToken);
-            await fetchStravaData(validToken);
-          } else {
-            setError("No hi ha token vàlid, cal iniciar sessió a Strava.");
-          }
+          if (validToken) await fetchStravaData(validToken);
+          else setError("No hi ha token vàlid, cal iniciar sessió a Strava.");
         }
       } catch (e) {
         console.error("Error processant token de Strava:", e);
@@ -99,125 +129,41 @@ function StravaData() {
     })();
   }, [authorizationCode, currentUser]);
 
-  // Helpers per decodificar polilínies
-  const decodePolyline = (poly) => {
-    try {
-      return polyline.decode(poly);
-    } catch {
-      return [];
-    }
-  };
-
-  const getStreetViewUrl = (lat, lng) => {
-    return `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${GOOGLE_API_KEY}`;
-  };
-
   return (
     <div className="strava-container">
-      <h1>DADES DE STRAVA</h1>
+      <h1 className="logo">ROUTECRAFT</h1>
       {loading && <p>Carregant dades...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {athlete && (
         <div>
-          <h2>Atleta</h2>
-          <p>
-            {athlete.firstname} {athlete.lastname}
-          </p>
-          <p>
-            {athlete.city} {athlete.country}
-          </p>
+          <h2>ATLETA</h2>
+          <h4> Nom:</h4><p>{athlete.firstname} {athlete.lastname}</p>
+          <h7> País:{athlete.city} {athlete.country}</h7>
         </div>
       )}
 
       {activities.length > 0 && (
         <div>
           <h2>ACTIVITATS</h2>
-          {activities.map((act) => {
-            const coords = act.map?.summary_polyline
-              ? decodePolyline(act.map.summary_polyline)
-              : [];
-
-            let streetViewUrlStart = "";
-            let streetViewUrlEnd = "";
-            let streetViewUrlRandom = "";
-
-            if (coords.length > 0) {
-              const [startLat, startLng] = coords[0];
-              streetViewUrlStart = getStreetViewUrl(startLat, startLng);
-            }
-            if (coords.length > 1) {
-              const [endLat, endLng] = coords[coords.length - 1];
-              streetViewUrlEnd = getStreetViewUrl(endLat, endLng);
-            }
-            if (coords.length > 2) {
-              const randomIndex = Math.floor(Math.random() * coords.length);
-              const [randLat, randLng] = coords[randomIndex];
-              streetViewUrlRandom = getStreetViewUrl(randLat, randLng);
-            }
-
-            return (
-              <div key={act.id} className="activity-block">
-                <h3>{act.name}</h3>
-                <p>Distància: {act.distance} m</p>
-                <p>Temps: {act.moving_time} s</p>
-
-                {streetViewUrlStart && (
-                  <div>
-                    <strong>Inici</strong>
-                    <img
-                      src={streetViewUrlStart}
-                      alt="Street View Inici"
-                      width={600}
-                      height={300}
-                    />
-                  </div>
-                )}
-
-                {streetViewUrlEnd && (
-                  <div>
-                    <strong>Final</strong>
-                    <img
-                      src={streetViewUrlEnd}
-                      alt="Street View Final"
-                      width={600}
-                      height={300}
-                    />
-                  </div>
-                )}
-
-                {streetViewUrlRandom && (
-                  <div>
-                    <strong>Punt aleatori</strong>
-                    <img
-                      src={streetViewUrlRandom}
-                      alt="Street View Aleatori"
-                      width={600}
-                      height={300}
-                    />
-                  </div>
-                )}
-
-                <hr />
-              </div>
-            );
-          })}
+          {activities.map((activity) => (
+            <Activity key={activity.id} activity={activity} />
+          ))}
         </div>
       )}
 
       {!loading && !athlete && !activities.length && !error && (
         <p>No hi ha dades. Potser cal connectar-se a Strava.</p>
       )}
-      {/* Botó per editar activitat */}
-        <button
-                  onClick={() => navigate(`/edit-activity/${act.id}`)}
-                  className="edit-button"
-                >
-                  Edita Activitat
-                </button>
 
+      <button
+        onClick={() => navigate(`/edit-activity`)}
+        className="edit-button"
+      >
+        EDITAR ACTIVITAT
+      </button>
     </div>
   );
-}
+};
 
 export default StravaData;
