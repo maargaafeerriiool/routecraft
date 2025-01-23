@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate para redirección
+import { useNavigate } from "react-router-dom"; // Importa useNavigate per redirecció
 import "./Carousel.css";
 import Mapa from "./Mapa.png";
 import Goals from "./Goals.png";
 import Run from "./Run.png";
+import Footer from "../../components/Footer/Footer"; // Ajusta el camí segons la teva estructura
 
 const slides = [
   {
@@ -22,13 +23,13 @@ const slides = [
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const navigate = useNavigate(); // Hook para redirección
+  const navigate = useNavigate(); // Hook per redirecció
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000); // Cambia cada 5 segundos
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar
+    }, 5000); // Canvia cada 5 segons
+    return () => clearInterval(interval); // Neteja l'interval al desmuntar
   }, []);
 
   return (
@@ -43,15 +44,16 @@ const Carousel = () => {
         <p className="carousel-text">{slides[currentSlide].text}</p>
       </div>
       <div className="carousel-buttons">
-        {/* Redirige a la página de inicio de sesión */}
+        {/* Redirigeix a la pàgina de login */}
         <button className="auth-button" onClick={() => navigate("/signin")}>
           SIGN IN
         </button>
-        {/* Redirige a la página de registro */}
+        {/* Redirigeix a la pàgina de registre */}
         <button className="auth-button" onClick={() => navigate("/signup")}>
           SIGN UP
         </button>
-      </div>
+        </div>
+      <Footer /> {/* Footer integrat dins del container */}
     </div>
   );
 };

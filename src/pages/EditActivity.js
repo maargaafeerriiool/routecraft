@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import "./EditActivity.css";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { db } from "./firebase"; // Asegúrate de tener tu configuración de Firebase
+import { collection, addDoc } from "firebase/firestore"; 
 
 const EditActivity = ({ activity, onSave }) => {
   const [description, setDescription] = useState(activity?.description || "");
   const [rating, setRating] = useState(activity?.rating || 0);
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    // Enviar dades editades a través de la funció `onSave`
-    onSave({
-      ...activity,
-      description,
-      rating,
-    });
-  };
-
   const navigate = useNavigate();
+
+  const handleSave = async (e) => {  // Función async para manejar Firestore
+    e.preventDefault();
+    
+    try {
+      // Agregar nuevo documento a Firestore
+      const docRef = await addDoc(collection(db, "activities"), { 
+        descripcio: description,
+        valoracio: rating,
+        nom: activity?.name || "" // Nombre de la actividad (ajusta según tu estructura)
+      });
+
+      console.log("Documento agregado con ID:", docRef.id);
+      
+      // Opcional: Lógica adicional después de guardar
+      onSave?.({ 
+        ...activity,
+        description,
+        rating
+      });
+      
+      navigate("/edit-activity?"); // Redirigir a otra página después de guardar
+
+    } catch (error) {
+      console.error("Error al agregar documento:", error);
+    }
+  };
 
   const handleStarClick = (starValue) => {
     setRating(starValue);

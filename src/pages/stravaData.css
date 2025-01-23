@@ -165,4 +165,42 @@ h2 {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+.athlete-info {
+  background: #f9fafb; /* Color de fons clar */
+  border-radius: 10px; /* Cantonades arrodonides */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra suau */
+  padding: 20px; /* Espai interior */
+  margin-bottom: 20px; /* Espai inferior */
+  text-align: left; /* Text alineat a l'esquerra */
+}
 
+.athlete-title {
+  font-size: 24px;
+  color: #ff6b6b; /* Color destacat */
+  margin-bottom: 10px; /* Espai entre el títol i els detalls */
+  font-weight: 700; /* Text en negreta */
+  text-align: center;
+}
+
+.athlete-details {
+  font-size: 16px;
+  color: #333; /* Color de text principal */
+  line-height: 1.6; /* Separació entre línies */
+}
+
+.athlete-label {
+  font-weight: bold; /* Etiquetes destacades */
+  margin-bottom: 5px;
+}
+
+.athlete-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #555; /* Color més suau */
+}
+
+.athlete-location {
+  font-size: 16px;
+  color: #666; /* Color encara més suau */
+  margin-top: 10px;
+}

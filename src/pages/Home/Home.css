@@ -1,88 +1,57 @@
-.home-background {
-  position: relative;
-}
-.home-container {
-  background: #fff;
+.container {
+  background: url('./FonsDegradat.png') no-repeat center center;
+  background-size: cover; /* Ajusta la mida de la imatge al contenidor */
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   padding: 40px 40px;
   text-align: center;
-  max-width: 450px;
-  margin: 10px auto;
+  width: 450px;
+  margin: 0 auto; /* Centrat horitzontalment */
+  height: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .splash-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para la pantalla de apertura */
-  color: rgb(228, 71, 19);
-  text-shadow: 
-    6px 3px 0 rgba(0, 0, 0, 0.2), /* Sombrejat per donar volum */
-    2px 2px 0 rgba(0, 0, 0, 0.15), /* Sombrejat més intens */
-    6px 3px 0 rgba(0, 0, 0, 0.1); /* Sombrejat de fons */
-  margin: 0; /* Elimina el marge per defecte */
-  z-index: 2; /* Asegura que la pantalla de apertura esté por encima del contenido */
-  transition: opacity 2s; /* Transición suave */
+  height: 100%; /* Per centrar verticalment */
 }
 
 .splash-text {
-  font-size: 3rem; /* Ajusta la fuente para la pantalla de apertura */
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.runners-image {
+  width: 50%;
+  max-width: 300px;
+  height: auto;
+  margin-top: 20px;
+}
+
+.form-container {
   text-align: center;
+  color: white;
 }
 
 .gradient-text {
-  font-size: 3rem; /* Ajusta la mida de la font aquí */
-  font-weight: bold; /* Fa que el text sigui més gros */
-  color: #d7cbcb; /* Color del text similar al que es veu a la imatge */
-  text-shadow: 
-    6px 3px 0 rgba(0, 0, 0, 0.2), /* Sombrejat per donar volum */
-    2px 2px 0 rgba(0, 0, 0, 0.15), /* Sombrejat més intens */
-    6px 3px 0 rgba(0, 0, 0, 0.1); /* Sombrejat de fons */
-  margin: 0; /* Elimina el marge per defecte */
-  filter: brightness(1.1); /* Opcional: augmenta la brillantor general del text */
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #d7cbcb;
+  margin-bottom: 20px;
 }
 
 .route-image {
-  width: 20%; /* Adjust size as needed */
-  max-width: 300px; /* Ensure max width */
-  height: auto; /* Maintain aspect ratio */
-}
-
-
-.runners-image {
-  position: absolute; /* Permet posicionar la imatge sobre el text */
-  top: 33%; /* Ajusta la posició vertical de la imatge */
-  left: 50%; /* Centra la imatge horitzontalment */
-  transform: translate(-50%, -50%); /* Centra la imatge en relació al seu propi tamany */
-  width: 30%; /* Ajusta la mida de la imatge (modifica segons les necessitats) */
-  max-width: 300px; /* Mida màxima per assegurar que no sigui massa gran */
-  height: auto; /* Manté la proporció de l'imatge */
-  z-index: 1; /* Assegura que la imatge estigui sobre el text */
-}
-
-/* Media queries per ajustar la mida de la lletra i la imatge en pantalles petites */
-@media (max-width: 768px) {
-  .gradient-text {
-    font-size: 3rem; /* Mida de la font més petita per a pantalles petites */
-  }
-
-  .runners-image {
-    width: 120%; /* Mida de la imatge més gran a pantalles petites */
-  }
-}
-
-@media (max-width: 480px) {
-  .gradient-text {
-    font-size: 2.5rem; /* Mida de la font encara més petita */
-  }
-
-  .runners-image {
-    width: 70%; /* Mida de la imatge més gran a pantalles molt petites */
-  }
+  width: 50%;
+  max-width: 300px;
+  height: auto;
+  margin-top: 20px;
 }

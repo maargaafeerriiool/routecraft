@@ -165,17 +165,26 @@ const StravaData = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {athlete && (
-        <div>
-          <h2>ATLETA</h2>
-          <h4>Nom:</h4>
-          <p>{athlete.firstname} {athlete.lastname}</p>
-          <h7>País: {athlete.city} {athlete.country}</h7>
+        <div className="athlete-info">
+          <h2 className="athlete-title">ATLETA</h2>
+          <p className="athlete-detail">
+            <span className="athlete-label">NOM:</span> {athlete.firstname} {athlete.lastname}
+          </p>
+          <p className="athlete-detail">
+            <span className="athlete-label">PAÍS:</span> {athlete.city} {athlete.country}
+          </p>
+          <p className="athlete-detail">
+            <span className="athlete-label">GÈNERE:</span> {athlete.sex === "M" ? "Masculí" : athlete.sex === "F" ? "Femení" : "No especificat"}
+          </p>
+          <p className="athlete-detail">
+            <span className="athlete-label">TOTAL D'ACTIVITATS:</span> {activities.length}
+          </p>
         </div>
       )}
 
       {activities.length > 0 && (
         <div>
-          <h2>ACTIVITATS</h2>
+          <h2 className="athlete-title">ACTIVITATS</h2>
           {activities.map((activity) => (
             <Activity key={activity.id} activity={activity} />
           ))}

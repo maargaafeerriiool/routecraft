@@ -65,11 +65,14 @@ input::placeholder {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-  
+
 .signin-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1); /* Només efecte d'escalat */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Només canvi a l'ombra */
+  background: linear-gradient(90deg, #ff6b6b, #ffa07a, #f39c12); /* Manté el mateix gradient */
+  color: white; /* Manté el text blanc */
 }
+
 
 /* Imagen del mapa/GIF */
 .map-image {
